@@ -14,12 +14,12 @@ const PizzaBlock = (props) => {
       <div className="pizza-block__selector">
         <ul>
           {props.types.map((type, i) => (
-            <li onClick={() => setActiveType(type)} className={activeType === i ? 'active' : ''}>  {typeNames[type]}</li>
+            <li key={i + (props.id)} onClick={() => setActiveType(type)} className={activeType === i ? 'active' : ''}>  {typeNames[type]}</li>
           ))}
         </ul>
         <ul>
           {props.sizes.map((size, i) => (
-            <li onClick={() => setActiveSize(i)} className={activeSize === i ? 'active' : ''}>{size} см</li>
+            <li key={i+(props.id + 3)} onClick={() => setActiveSize(i)} className={activeSize === i ? 'active' : ''}>{size} см</li>
           ))}
         </ul>
       </div>

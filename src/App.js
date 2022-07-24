@@ -19,9 +19,9 @@ function App() {
             <Sort />
           </div>
           <h2 className="content__title">Все пиццы</h2>
-          <div className="content__items">
+          <div  className="content__items">
             {pizzas.map((obj) => (
-              <PizzaBlock {...obj}/* price={obj.price} name={obj.name} imageUrl={obj.imageUrl} sizes={obj.sizes} types={obj.types} *//>
+              <PizzaBlock key={obj.id} {...obj}/* price={obj.price} name={obj.name} imageUrl={obj.imageUrl} sizes={obj.sizes} types={obj.types} *//>
             ))}
           </div>
         </div>
