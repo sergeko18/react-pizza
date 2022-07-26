@@ -34,7 +34,7 @@ const Sort = () => {
       </div>
       {open && (
         <div className="sort__popup">
-          <ul>gitt
+          <ul>
             {list.map((v, i) => <li key={i} onClick={() => onClickSetSelected(i)} className={slected === i ? 'active': ''}>{v}</li>)}
           </ul>
         </div>
