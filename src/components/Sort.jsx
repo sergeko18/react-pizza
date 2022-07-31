@@ -1,23 +1,27 @@
 import React from 'react';
 
-const Sort = () => {
+export const list = [
+  { name: 'популярности(у)', sortApiName: 'rating' },
+  { name: 'популярности(в)', sortApiName: '-rating' },
+  { name: 'цене(у)', sortApiName: 'price' },
+  { name: 'цене(в)', sortApiName: '-price' },
+  { name: 'алфавиту(у)', sortApiName: 'name' },
+  { name: 'алфавиту(в)', sortApiName: '-name' }
+];
+
+const Sort = (props) => {
   const [open, setOpen] = React.useState(false);
-  const [slected, setSelected] = React.useState(0);
-  
 
-  const list = ['популярности', 'цене', 'алфавиту'];
-  const onClickSetSelected = (i) =>{
-    return(
-        setSelected(i),
-        setOpen(false)
+  const onClickSetSelected = (i) => {
+    return (
+      props.setSelectedSort(i),
+      setOpen(false)
     )
-  }
-
-
+  };
 
   return (
     <div className="sort">
-      <div onClick={() => setOpen(!open)}  className="sort__label">
+      <div onClick={() => setOpen(!open)} className="sort__label">
         <svg
           width="10"
           height="6"
@@ -30,12 +34,19 @@ const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>{list[slected]}</span>
+        <span>{props.slectedSort.name}</span>
       </div>
       {open && (
         <div className="sort__popup">
           <ul>
-            {list.map((v, i) => <li key={i} onClick={() => onClickSetSelected(i)} className={slected === i ? 'active': ''}>{v}</li>)}
+            {list.map((v, i) => (
+              <li
+                key={i}
+                onClick={() => onClickSetSelected(v)}
+                className={v.sortApiName === props.slectedSort.sortApiName ? 'active' : ''}>
+                {v.name}
+              </li>
+            ))}
           </ul>
         </div>
       )}
