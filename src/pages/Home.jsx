@@ -4,12 +4,15 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import {list} from '../components/Sort';
+import Pagination from '../components/Pagination';
 
-const Home = () => {
+
+const Home = (props) => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [activeCategory, setActiveCategory] = React.useState(0);
   const [slectedSort, setSelectedSort] = React.useState(list[0]);
+  const [selectedPage, setSelectedPage] = React.useState(1)
 
   
 
@@ -19,16 +22,17 @@ const Home = () => {
     const sortBy = slectedSort.sortApiName.replace('-', '');
     const order = slectedSort.sortApiName.includes('-') ? 'asc' : 'desc';
     const category = activeCategory > 0 ? `category=${activeCategory}` : '';
+    const search = props.searchValue ? `&search=${props.searchValue}` : '';
     
 
-    fetch(`https://62def0c1976ae7460be54171.mockapi.io/items?${category}&sortby=${sortBy}&order=${order}`)
+    fetch(`https://62def0c1976ae7460be54171.mockapi.io/items?page=${selectedPage}&limit=4${category}&sortby=${sortBy}&order=${order}${search}`)
       .then((res) => res.json())
       .then((json) => {
         setItems(json);
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [activeCategory, slectedSort]);
+  }, [activeCategory, slectedSort, props.searchValue, selectedPage]);
 
 
 
@@ -52,7 +56,8 @@ const Home = () => {
               />
             ))}
       </div>
-    </div>
+      <Pagination setSelectedPage={setSelectedPage}/>
+    </div> 
   );
 };
 
