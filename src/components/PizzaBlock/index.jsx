@@ -1,6 +1,8 @@
 import React from 'react';
 
 const PizzaBlock = (props) => {
+
+  
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
 
@@ -25,6 +27,7 @@ const PizzaBlock = (props) => {
           </ul>
           <ul>
             {props.sizes.map((size, i) => (
+           
               <li
                 key={i + (props.id + 3)}
                 onClick={() => setActiveSize(i)}

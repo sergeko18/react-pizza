@@ -16,7 +16,7 @@ const Header = (props) => {
                 </div>
                 </Link>
 
-                <Search setSearchValue={props.setSearchValue} searchValue={props.searchValue}/>
+                <Search />
                 
                 <div className="header__cart">
                     <a href="/cart" className="button button--cart">
