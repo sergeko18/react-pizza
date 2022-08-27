@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Categories from '../components/Categories';
@@ -34,13 +35,21 @@ const Home = () => {
     const search = props.searchValue ? `&search=${props.searchValue}` : '';
     
 
-    fetch(`https://62def0c1976ae7460be54171.mockapi.io/items?${category}&page=${selectedPage}&limit=4&sortby=${sortBy}&order=${order}${search}`)
-      .then((res) => res.json())
-      .then((json) => {
-        setItems(json.items);
-        //setItemsCount(json.count);
-        setIsLoading(false);
-      });
+    // fetch(`https://62def0c1976ae7460be54171.mockapi.io/items?${category}&page=${selectedPage}&limit=4&sortby=${sortBy}&order=${order}${search}`)
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     setItems(json.items);
+    //     //setItemsCount(json.count);
+    //     setIsLoading(false);
+    //   });
+
+    axios.get(`https://62def0c1976ae7460be54171.mockapi.io/items?${category}&page=${selectedPage}&limit=4&sortby=${sortBy}&order=${order}${search}`)
+    .then(responce => {
+      setItems(responce.data.items);
+      setIsLoading(false);
+    })
+
+
     window.scrollTo(0, 0);
   }, [activeCategory, sort, props.searchValue, selectedPage]);
 

@@ -6,6 +6,14 @@ import { SearchContext } from '../../App';
 const Serach = () => {
 
   const props = React.useContext(SearchContext);
+  const inputRef = React.useRef()
+
+  const onClickClear = () => {
+    props.setSearchValue('');
+  //   document.querySelector('input').focus()
+    inputRef.current.focus();
+
+   }
 
 
   return (
@@ -43,8 +51,8 @@ const Serach = () => {
           y2="20.366"
         />
       </svg>
-      {props.searchValue && <img onClick={e => props.setSearchValue('')} className={styles.removeIcon} src={removeIcon} alt='' />}
-      <input className={styles.input} onChange={e => props.setSearchValue(e.target.value)} value={props.searchValue} type="text" placeholder="Pizza search" />
+      {props.searchValue && <img onClick={onClickClear} className={styles.removeIcon} src={removeIcon} alt='' />}
+      <input ref={inputRef} className={styles.input} onChange={e => props.setSearchValue(e.target.value)} value={props.searchValue} type="text" placeholder="Pizza search" />
       
     
     </div>
