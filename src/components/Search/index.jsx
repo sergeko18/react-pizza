@@ -20,7 +20,7 @@ const Serach = () => {
   const updateSearchValue = React.useCallback(
     debounce((str) => {
       props.setSearchValue(str)
-    }, 500) , [],
+    }, 500) , []
   )
 
   const onChangeInputValue = (e) => {

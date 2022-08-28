@@ -7,12 +7,13 @@ import Sort from '../components/Sort';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 import { useSelector} from 'react-redux';
+import { setSelectedPage } from '../redux/slices/filterSlice';
 
 
 
 
 const Home = () => {  
-  const {activeCategory, sort} = useSelector((state) => state.filter);
+  const {activeCategory, sort, selectedPage} = useSelector((state) => state.filter);
 
   
 
@@ -22,7 +23,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   //const [activeCategory, setActiveCategory] = React.useState(0);
   //const [slectedSort, setSelectedSort] = React.useState(list[0]);
-  const [selectedPage, setSelectedPage] = React.useState(1);
+  //const [selectedPage, setSelectedPage] = React.useState(1);
  
 
   React.useEffect(() => {
