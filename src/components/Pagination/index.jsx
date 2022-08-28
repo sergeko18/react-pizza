@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate';
 import { useDispatch } from 'react-redux';
 import styles from './Pagination.module.scss';
 
-const Pagination = ({setSelectedPage}) => {
+const Pagination = ({setSelectedPage, selectedPage}) => {
 
   const dispatch = useDispatch();
 
@@ -14,10 +14,11 @@ const Pagination = ({setSelectedPage}) => {
         className={styles.root}
         breakLabel="..."
         nextLabel=">"
+        previousLabel="<"
         onPageChange={e => dispatch(setSelectedPage(e.selected + 1))}
         pageRangeDisplayed={4}
         pageCount={3}
-        previousLabel="<"
+        forcePage={selectedPage - 1}
         renderOnZeroPageCount={null}
       />
     </div>

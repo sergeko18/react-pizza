@@ -19,9 +19,14 @@ export const filterSlice = createSlice({
     setSelectedPage(state, action) {
       state.selectedPage = action.payload;
     },
+    setFilters(state, action) {
+      state.activeCategory = Number(action.payload.activeCategory);
+      state.selectedPage = Number(action.payload.selectedPage);
+      state.sort = action.payload.sort;
+    },
   },
 });
 
-export const { setActiveCategory, setSort, setSelectedPage } = filterSlice.actions; //actions contain all that reducers contain in "filterSlice"
+export const { setActiveCategory, setSort, setSelectedPage, setFilters } = filterSlice.actions; //actions contain all that reducers contain in "filterSlice"
 
 export default filterSlice.reducer;

@@ -1,19 +1,23 @@
 import React from 'react';
 import axios from 'axios';
-import PizzaBlock from '../components/PizzaBlock';
-import Skeleton from '../components/PizzaBlock/Skeleton';
-import Categories from '../components/Categories';
-import Sort from '../components/Sort';
-import Pagination from '../components/Pagination';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom'
+import { Categories, Sort, PizzaBlock, Skeleton, Pagination } from '../components';
 import { SearchContext } from '../App';
 import { useSelector} from 'react-redux';
-import { setSelectedPage } from '../redux/slices/filterSlice';
+import { setSelectedPage, setFilters } from '../redux/slices/filterSlice';
+import { sortList } from '../components/Sort'
+import { useDispatch } from 'react-redux';
 
 
 
 
 const Home = () => {  
   const {activeCategory, sort, selectedPage} = useSelector((state) => state.filter);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  let isSearch = React.useRef(false);
+  let isMounted = React.useRef(false);
 
   
 
@@ -24,10 +28,7 @@ const Home = () => {
   //const [activeCategory, setActiveCategory] = React.useState(0);
   //const [slectedSort, setSelectedSort] = React.useState(list[0]);
   //const [selectedPage, setSelectedPage] = React.useState(1);
- 
-
-  React.useEffect(() => {
-    
+  const fetchPizzas = () => {
     setIsLoading(true);
     
     const sortBy = sort.sortApiName.replace('-', '');
@@ -49,10 +50,51 @@ const Home = () => {
       setItems(responce.data.items);
       setIsLoading(false);
     })
+  }
+//If first rander has already been, we check URL parametrs and add them to redux
+  React.useEffect(() => {
+    if(window.location.search) {
+      
+      const params = qs.parse(window.location.search.substring(1));
+      const sort = sortList.find(obj => obj.sortApiName===params.sortApiName)
+      
+      dispatch(setFilters({
+        ...params,
+        sort
 
-
+      }))
+      isSearch.current = true;
+    }
+  }, []);
+ 
+//If first render has already been, the app will execute the request to a server 
+  React.useEffect(() => {
     window.scrollTo(0, 0);
+    if(!isSearch.current){
+      fetchPizzas()
+    };
+
+    isSearch.current = false;
+
+    
+    
   }, [activeCategory, sort, props.searchValue, selectedPage]);
+
+// If first render has already been and parameters has been changed, we'll execute this part of code.
+  React.useEffect(() => {
+    if(isMounted.current){
+      const queryString = qs.stringify({
+      
+        sortApiName: sort.sortApiName,
+        activeCategory,
+        selectedPage,
+      })
+      navigate(`?${queryString}`);
+    }
+
+    isMounted.current = true;
+
+  }, [activeCategory, sort, props.searchValue, selectedPage] )
 
   
 
@@ -74,7 +116,7 @@ const Home = () => {
               />
             ))}
       </div>
-      <Pagination  setSelectedPage={setSelectedPage}/>
+      <Pagination selectedPage={selectedPage}  setSelectedPage={setSelectedPage}/>
     </div> 
   );
 };
