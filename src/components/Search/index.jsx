@@ -1,19 +1,32 @@
 import React from 'react';
+import debounce from 'lodash.debounce'
 import styles from './Search.module.scss';
 import removeIcon from '../../assets/img/remove-icon.svg'
 import { SearchContext } from '../../App';
 
 const Serach = () => {
 
+  const [inputValue, setInputValue] = React.useState('');
   const props = React.useContext(SearchContext);
-  const inputRef = React.useRef()
+  const inputRef = React.useRef();
 
   const onClickClear = () => {
+    setInputValue('');
     props.setSearchValue('');
   //   document.querySelector('input').focus()
     inputRef.current.focus();
+  }
 
-   }
+  const updateSearchValue = React.useCallback(
+    debounce((str) => {
+      props.setSearchValue(str)
+    }, 500) , [],
+  )
+
+  const onChangeInputValue = (e) => {
+    setInputValue(e.target.value);
+    updateSearchValue(e.target.value)
+  }
 
 
   return (
@@ -51,8 +64,8 @@ const Serach = () => {
           y2="20.366"
         />
       </svg>
-      {props.searchValue && <img onClick={onClickClear} className={styles.removeIcon} src={removeIcon} alt='' />}
-      <input ref={inputRef} className={styles.input} onChange={e => props.setSearchValue(e.target.value)} value={props.searchValue} type="text" placeholder="Pizza search" />
+      {inputValue && <img onClick={onClickClear} className={styles.removeIcon} src={removeIcon} alt='' />}
+      <input ref={inputRef} className={styles.input} onChange={onChangeInputValue} value={inputValue} type="text" placeholder="Pizza search" />
       
     
     </div>
