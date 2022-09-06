@@ -2,11 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom'
-import { Categories, Sort, PizzaBlock, Skeleton, Pagination } from '../components';
+import { Categories, Sort, PizzaBlock, Skeleton, Pagination, sortList } from '../components';
 import { SearchContext } from '../App';
 import { useSelector} from 'react-redux';
 import { setSelectedPage, setFilters } from '../redux/slices/filterSlice';
-import { sortList } from '../components/Sort'
 import { useDispatch } from 'react-redux';
 
 
@@ -28,7 +27,7 @@ const Home = () => {
   //const [activeCategory, setActiveCategory] = React.useState(0);
   //const [slectedSort, setSelectedSort] = React.useState(list[0]);
   //const [selectedPage, setSelectedPage] = React.useState(1);
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true);
     
     const sortBy = sort.sortApiName.replace('-', '');
@@ -45,18 +44,32 @@ const Home = () => {
     //     setIsLoading(false);
     //   });
 
-    axios.get(`https://62def0c1976ae7460be54171.mockapi.io/items?${category}&page=${selectedPage}&limit=4&sortby=${sortBy}&order=${order}${search}`)
-    .then(responce => {
-      setItems(responce.data.items);
+    // axios.get(`https://62def0c1976ae7460be54171.mockapi.io/items?${category}&page=${selectedPage}&limit=4&sortby=${sortBy}&order=${order}${search}`)
+    // .then(responce => {
+    //   setItems(responce.data.items);
+    //   setIsLoading(false);
+    // })
+
+    try {
+       const responce = await axios.get(`https://62def0c1976ae7460be54171.mockapi.io/items?${category}&page=${selectedPage}&limit=4&sortby=${sortBy}&order=${order}${search}`)
+       setItems(responce.data.items);
+      } catch (error) {
+        console.log('ERROR', error);
+        alert('Что-то пошло не так :(')      
+    } finally {
       setIsLoading(false);
-    })
+    }
+    window.scrollTo(0, 0);
   }
-//If first rander has already been, we check URL parametrs and add them to redux
+
+
+//If first rander has already been, we check a URL parametrs and add them to redux
   React.useEffect(() => {
-    if(window.location.search) {
+    if(window.location.search) {  // "window.location.search" - pulling the string from a URL
+      //console.log(window.location.search);  =>  ?sortApiName=rating&activeCategory=1&selectedPage=1
       
-      const params = qs.parse(window.location.search.substring(1));
-      const sort = sortList.find(obj => obj.sortApiName===params.sortApiName)
+      const params = qs.parse(window.location.search.substring(1)); //Making the string to a object with "qs". Method substring() removes the first symbol from the string "?"
+      const sort = sortList.find(obj => obj.sortApiName===params.sortApiName) //find() method to find same key-value pair
       
       dispatch(setFilters({
         ...params,
@@ -69,30 +82,26 @@ const Home = () => {
  
 //If first render has already been, the app will execute the request to a server 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    
     if(!isSearch.current){
       fetchPizzas()
     };
-
     isSearch.current = false;
+    }, [activeCategory, sort, props.searchValue, selectedPage]);
 
-    
-    
-  }, [activeCategory, sort, props.searchValue, selectedPage]);
-
-// If first render has already been and parameters has been changed, we'll execute this part of code.
+// If first render has already been and the parameters has been changed, we'll execute this part of code.
   React.useEffect(() => {
     if(isMounted.current){
-      const queryString = qs.stringify({
+      const queryString = qs.stringify({  //Making a string from this object with the library "qs"
       
         sortApiName: sort.sortApiName,
         activeCategory,
         selectedPage,
       })
-      navigate(`?${queryString}`);
+      navigate(`?${queryString}`); // Add the string to the URL with the useNovigate hook 
     }
 
-    isMounted.current = true;
+    isMounted.current = true; // Changing the boolian variable to true, when first render has already been
 
   }, [activeCategory, sort, props.searchValue, selectedPage] )
 
