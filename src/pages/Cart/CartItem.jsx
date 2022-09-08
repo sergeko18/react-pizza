@@ -1,11 +1,16 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import {addItem, decrementItem} from '../../redux/slices/cartSlice'
+import {addItem, decrementItem, removeItem} from '../../redux/slices/cartSlice'
 
 const CartItem = (props) => {
   const dispatch = useDispatch();
-  const onClickDecrement = () => dispatch(decrementItem(props.id))
-  const onClickIncrement = () => dispatch(addItem({id:props.id}))
+  const onClickDecrement = () => dispatch(decrementItem(props.id));
+  const onClickIncrement = () => dispatch(addItem({id:props.id}));
+  const onClickRemove = () =>{
+    if(window.confirm('Remove pizza?')){
+      dispatch(removeItem(props.id));
+    }
+  } 
   return (
     <div className="cart__item">
           <div className="cart__item-img">
@@ -17,7 +22,7 @@ const CartItem = (props) => {
           </div>
           <div className="cart__item-info">
             <h3>{props.name}</h3>
-            <p>{props.type}, 26 см.</p>
+            <p>{props.type}, {props.size} см.</p>
           </div>
           <div className="cart__item-count">
             <div onClick={onClickDecrement} className="button button--outline button--circle cart__item-count-minus">
@@ -57,10 +62,10 @@ const CartItem = (props) => {
             </div>
           </div>
           <div className="cart__item-price">
-            <b>{props.price * props.count} ₽</b>
+            <b>{props.price * props.count} $</b>
           </div>
           <div className="cart__item-remove">
-            <div className="button button--outline button--circle">
+            <div onClick={onClickRemove} className="button button--outline button--circle">
               <svg
                 width="10"
                 height="10"

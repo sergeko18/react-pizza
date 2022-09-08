@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { clearItems } from '../../redux/slices/cartSlice'
 import CartItem from './CartItem';
+import CartEmpty from './CartEmpty';
 
 
 
@@ -15,6 +16,10 @@ const Cart = () => {
     }
   }
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+
+  if(!items.length) {
+    return <CartEmpty />
+  }
 
   return (
     <div className="container container--cart">
@@ -102,7 +107,7 @@ const Cart = () => {
           </span>
           <span>
             {' '}
-            Сумма заказа: <b>{totalPrice}₽</b>{' '}
+            Сумма заказа: <b>{totalPrice}$</b>{' '}
           </span>
         </div>
         <div className="cart__bottom-buttons">
