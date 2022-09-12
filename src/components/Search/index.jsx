@@ -2,24 +2,28 @@ import React from 'react';
 import debounce from 'lodash.debounce'
 import styles from './Search.module.scss';
 import removeIcon from '../../assets/img/remove-icon.svg'
-import { SearchContext } from '../../App';
+//import { SearchContext } from '../../App';
+import { setSearchValue } from '../../redux/slices/filterSlice';
+import { useDispatch } from 'react-redux';
+
 
 const Serach = () => {
+  const dispatch = useDispatch();
 
   const [inputValue, setInputValue] = React.useState('');
-  const props = React.useContext(SearchContext);
+  //const props = React.useContext(SearchContext);
   const inputRef = React.useRef();
 
   const onClickClear = () => {
     setInputValue('');
-    props.setSearchValue('');
+    dispatch(setSearchValue(''));
   //   document.querySelector('input').focus()
     inputRef.current.focus();
   }
 
   const updateSearchValue = React.useCallback(
     debounce((str) => {
-      props.setSearchValue(str)
+      dispatch(setSearchValue(str))
     }, 500) , []
   )
 

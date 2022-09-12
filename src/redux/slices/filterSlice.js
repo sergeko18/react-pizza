@@ -4,6 +4,7 @@ const initialState = {
   activeCategory: 0,
   selectedPage: 1,
   sort: { name: 'популярности(у)', sortApiName: 'rating' },
+  searchValue: '',
 };
 
 export const filterSlice = createSlice({
@@ -12,6 +13,9 @@ export const filterSlice = createSlice({
   reducers: {
     setActiveCategory: (state, action) => {
       state.activeCategory = action.payload;
+    },
+    setSearchValue(state, action) {
+      state.searchValue = action.payload;
     },
     setSort(state, action) {
       state.sort = action.payload;
@@ -27,6 +31,9 @@ export const filterSlice = createSlice({
   },
 });
 
-export const { setActiveCategory, setSort, setSelectedPage, setFilters } = filterSlice.actions; //actions contain all that reducers contain in "filterSlice"
+export const selectFilter = (state) => state.filter;
+
+export const { setActiveCategory, setSort, setSelectedPage, setFilters, setSearchValue } =
+  filterSlice.actions; //actions contain all that reducers contain in "filterSlice"
 
 export default filterSlice.reducer;

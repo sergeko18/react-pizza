@@ -2,26 +2,23 @@ import React from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom'
 import { Categories, Sort, PizzaBlock, Skeleton, Pagination, sortList } from '../components';
-import { SearchContext } from '../App';
-import { useSelector} from 'react-redux';
-import { setSelectedPage, setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizzaSlice';
+//import { SearchContext } from '../App';
+import { useSelector } from 'react-redux';
+import { setSelectedPage, setFilters, selectFilter } from '../redux/slices/filterSlice';
+import { fetchPizzas, selectPizza } from '../redux/slices/pizzaSlice';
 import { useDispatch } from 'react-redux';
 import NotFound404 from './NotFound';
 
 
 
 const Home = () => {  
-  const { itemsPizza, status } = useSelector(state => state.pizza);
-  const {activeCategory, sort, selectedPage} = useSelector((state) => state.filter);
+  const { itemsPizza, status } = useSelector(selectPizza);
+  const {activeCategory, sort, selectedPage, searchValue} = useSelector(selectFilter);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let isSearch = React.useRef(false);
   let isMounted = React.useRef(false);
-
-  
-
-  const props = React.useContext(SearchContext);
+  //const props = React.useContext(SearchContext); puted this in RTK
 
   //const [items, setItems] = React.useState({});
   //const [isLoading, setIsLoading] = React.useState(true);
@@ -33,7 +30,7 @@ const Home = () => {
     const sortBy = sort.sortApiName.replace('-', '');
     const order = sort.sortApiName.includes('-') ? 'asc' : 'desc';
     const category = activeCategory > 0 ? `category=${activeCategory}` : '';
-    const search = props.searchValue ? `&search=${props.searchValue}` : '';
+    const search = searchValue ? `&search=${searchValue}` : '';
     
 
     // fetch(`https://62def0c1976ae7460be54171.mockapi.io/items?${category}&page=${selectedPage}&limit=4&sortby=${sortBy}&order=${order}${search}`)
@@ -87,7 +84,7 @@ const Home = () => {
       getPizzas()
     };
     isSearch.current = false;
-    }, [activeCategory, sort, props.searchValue, selectedPage]);
+    }, [activeCategory, sort, searchValue, selectedPage]);
 
 // If first render has already been and the parameters has been changed, we'll execute this part of code.
   React.useEffect(() => {
@@ -103,7 +100,7 @@ const Home = () => {
 
     isMounted.current = true; // Changing the boolian variable to true, when first render has already been
 
-  }, [activeCategory, sort, props.searchValue, selectedPage] )
+  }, [activeCategory, sort, searchValue, selectedPage] )
 
   
 
