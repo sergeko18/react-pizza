@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import {addItem, decrementItem, removeItem} from '../../redux/slices/cartSlice'
+import {addItem, CartItemType, decrementItem, removeItem} from '../../redux/slices/cartSlice'
 
 type CartItemProps = {
   id: string;
@@ -16,7 +16,7 @@ type CartItemProps = {
 const CartItem: React.FC<CartItemProps> = (props) => {
   const dispatch = useDispatch();
   const onClickDecrement = () => dispatch(decrementItem(props.id));
-  const onClickIncrement = () => dispatch(addItem({id:props.id}));
+  const onClickIncrement = () => dispatch(addItem({id:props.id} as CartItemType));
   const onClickRemove = () =>{
     if(window.confirm('Remove pizza?')){
       dispatch(removeItem(props.id));

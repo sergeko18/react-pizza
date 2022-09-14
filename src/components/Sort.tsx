@@ -1,55 +1,47 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setSort } from '../redux/slices/filterSlice';
+import { setSort, SortType } from '../redux/slices/filterSlice';
 
 
-type SortListType = {
-  name: string;
-  sortApiName: string;
-}
-
-export const sortList: SortListType[] = [
+export const sortList: SortType[] = [
   { name: 'популярности(у)', sortApiName: 'rating' },
   { name: 'популярности(в)', sortApiName: '-rating' },
   { name: 'цене(у)', sortApiName: 'price' },
   { name: 'цене(в)', sortApiName: '-price' },
   { name: 'алфавиту(у)', sortApiName: 'name' },
-  { name: 'алфавиту(в)', sortApiName: '-name' }
+  { name: 'алфавиту(в)', sortApiName: '-name' },
 ];
 
 const Sort = (props: {
   sort: {
-    name: string,
-    sortApiName: string
-  },
+    name: string;
+    sortApiName: string;
+  };
 }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const sortRef = React.useRef<HTMLDivElement>(null);
-  
 
-  const onClickSetSelected = (obj: SortListType) => {
-    return (
-      dispatch(setSort(obj)),
-      setOpen(false)
-    )
+  const onClickSetSelected = (obj: SortType) => {
+    return dispatch(setSort(obj)), setOpen(false);
   };
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const _event = event as MouseEvent & { // MouseEvent had't have the "path" befor(that made only for TypeScript)
-        path: Node[]
+      const _event = event as MouseEvent & {
+        // MouseEvent had't have the "path" befor(that made only for TypeScript)
+        path: Node[];
+      };
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
+        setOpen(false);
       }
-        if(sortRef.current && !_event.path.includes(sortRef.current)) {
-          setOpen(false)
-        }
-    }
+    };
     document.body.addEventListener('click', handleClickOutside);
-    
+
     return () => {
-      document.body.removeEventListener('click', handleClickOutside)
-    }
-  }, [])
+      document.body.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div ref={sortRef} className="sort">

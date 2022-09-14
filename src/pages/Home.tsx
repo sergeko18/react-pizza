@@ -26,8 +26,8 @@ const Home: React.FC = () => {
   //const [selectedPage, setSelectedPage] = React.useState(1);
 
   const setSelectedPageOnClick = (page: number) => {
-    dispatch(setSelectedPage(page))
-  }
+    dispatch(setSelectedPage(page));
+  };
 
   const getPizzas = () => {
     const sortBy = sort.sortApiName.replace('-', '');
@@ -57,9 +57,10 @@ const Home: React.FC = () => {
     //   setIsLoading(false)
     // }
 
-    dispatch( 
+    dispatch(
       // @ts-ignore
-      fetchPizzas({ sortBy, order, category, search, selectedPage }));
+      fetchPizzas({ sortBy, order, category, search, selectedPage }),
+    );
     window.scrollTo(0, 0);
   };
 
@@ -71,15 +72,17 @@ const Home: React.FC = () => {
 
       const params = qs.parse(window.location.search.substring(1)); //Making the string to a object with "qs". Method substring() removes the first symbol from the string "?"
       const sort = sortList.find((obj) => obj.sortApiName === params.sortApiName); //find() method to find same key-value pair
+      const filterParams = {
+          activeCategory: Number(params.activeCategory),
+          selectedPage: Number(params.selectedPage),
+          sort: sort || sortList[0],
+        };
+        dispatch(setFilters(filterParams));
 
-      dispatch(
-        setFilters({
-          ...params,
-          sort,
-        }),
-      );
+
       isSearch.current = true;
     }
+    
   }, []);
 
   //If first render has already been, the app will execute the request to a server
