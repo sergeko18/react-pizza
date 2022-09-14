@@ -36,8 +36,11 @@ const Sort = (props: {
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (event: any) => {
-        if(! event.path.includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as MouseEvent & { // MouseEvent had't have the "path" befor(that made only for TypeScript)
+        path: Node[]
+      }
+        if(sortRef.current && !_event.path.includes(sortRef.current)) {
           setOpen(false)
         }
     }

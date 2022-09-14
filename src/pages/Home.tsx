@@ -6,16 +6,17 @@ import { Categories, Sort, PizzaBlock, Skeleton, Pagination, sortList } from '..
 import { useSelector } from 'react-redux';
 import { setSelectedPage, setFilters, selectFilter } from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizza } from '../redux/slices/pizzaSlice';
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
 import NotFound404 from './NotFound';
+import { useAppDispatch } from '../redux/store';
 
 const Home: React.FC = () => {
   const { itemsPizza, status } = useSelector(selectPizza);
   const { activeCategory, sort, selectedPage, searchValue } = useSelector(selectFilter);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  let isSearch = React.useRef(false);
-  let isMounted = React.useRef(false);
+  const dispatch = useAppDispatch();
+  let isSearch = React.useRef<boolean>(false);
+  let isMounted = React.useRef<boolean>(false);
   //const props = React.useContext(SearchContext); puted this in RTK
 
   //const [items, setItems] = React.useState({});
@@ -23,6 +24,11 @@ const Home: React.FC = () => {
   //const [activeCategory, setActiveCategory] = React.useState(0);
   //const [slectedSort, setSelectedSort] = React.useState(list[0]);
   //const [selectedPage, setSelectedPage] = React.useState(1);
+
+  const setSelectedPageOnClick = (page: number) => {
+    dispatch(setSelectedPage(page))
+  }
+
   const getPizzas = () => {
     const sortBy = sort.sortApiName.replace('-', '');
     const order = sort.sortApiName.includes('-') ? 'asc' : 'desc';
@@ -122,7 +128,7 @@ const Home: React.FC = () => {
         </div>
       )}
 
-      <Pagination selectedPage={selectedPage} setSelectedPage={setSelectedPage} />
+      <Pagination selectedPage={selectedPage} setSelectedPageOnClick={setSelectedPageOnClick} />
     </div>
   );
 };

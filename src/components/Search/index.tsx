@@ -13,7 +13,7 @@ const Serach: React.FC = () => {
   //const props = React.useContext(SearchContext);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  const onClickClear = () => {
+  const onClickClear = (e: React.MouseEvent<HTMLImageElement>) => {
     setInputValue('');
     dispatch(setSearchValue(''));
     //   document.querySelector('input').focus()
@@ -31,7 +31,7 @@ const Serach: React.FC = () => {
     [],
   );
 
-  const onChangeInputValue = (e: any) => {
+  const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     updateSearchValue(e.target.value);
   };
