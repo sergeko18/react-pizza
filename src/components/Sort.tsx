@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setSort, SortType } from '../redux/slices/filterSlice';
-
+import { setSort } from '../redux/filter/slice';
+import { SortType } from '../redux/filter/types';
 
 export const sortList: SortType[] = [
   { name: 'популярности(у)', sortApiName: 'rating' },
@@ -12,12 +12,14 @@ export const sortList: SortType[] = [
   { name: 'алфавиту(в)', sortApiName: '-name' },
 ];
 
-const Sort = (props: {
+type SortProps = {
   sort: {
     name: string;
     sortApiName: string;
   };
-}) => {
+};
+
+const Sort: React.FC<SortProps> = React.memo((props) => {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const sortRef = React.useRef<HTMLDivElement>(null);
@@ -76,6 +78,6 @@ const Sort = (props: {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

@@ -1,7 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, CartItemType, selectCartItemsById } from '../../redux/slices/cartSlice';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { selectCartItemsById } from '../../redux/cart/selectors';
+import { addItem } from '../../redux/cart/slice';
+import { CartItemType } from '../../redux/cart/types';
 
 const typeNames = ['тонкое', 'традиционное'];
 
@@ -12,7 +14,7 @@ type PizzaBlockProps = {
   imageUrl: string;
   sizes: number[];
   types: number[];
-}
+};
 
 const PizzaBlock: React.FC<PizzaBlockProps> = (props) => {
   const [activeType, setActiveType] = React.useState(0);
@@ -30,7 +32,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = (props) => {
       imageUrl: props.imageUrl,
       type: typeNames[activeType],
       size: props.sizes[activeSize],
-      count: 0
+      count: 0,
     };
     dispatch(addItem(item));
   };
@@ -38,7 +40,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = (props) => {
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <Link  to={`/pizza/${props.id}`}>
+        <Link to={`/pizza/${props.id}`}>
           <img className="pizza-block__image" src={props.imageUrl} alt="Pizza" />
         </Link>
 

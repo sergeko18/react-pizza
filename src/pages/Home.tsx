@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { Categories, Sort, PizzaBlock, Skeleton, Pagination, sortList } from '../components';
 //import { SearchContext } from '../App';
 import { useSelector } from 'react-redux';
-import { setSelectedPage, setFilters, selectFilter } from '../redux/slices/filterSlice';
-import { fetchPizzas, selectPizza } from '../redux/slices/pizzaSlice';
 //import { useDispatch } from 'react-redux';
 import NotFound404 from './NotFound';
 import { useAppDispatch } from '../redux/store';
+import { selectPizza } from '../redux/pizza/selectors';
+import { selectFilter } from '../redux/filter/selectors';
+import { setFilters, setSelectedPage } from '../redux/filter/slice';
 
 const Home: React.FC = () => {
   const { itemsPizza, status } = useSelector(selectPizza);
@@ -73,16 +74,14 @@ const Home: React.FC = () => {
       const params = qs.parse(window.location.search.substring(1)); //Making the string to a object with "qs". Method substring() removes the first symbol from the string "?"
       const sort = sortList.find((obj) => obj.sortApiName === params.sortApiName); //find() method to find same key-value pair
       const filterParams = {
-          activeCategory: Number(params.activeCategory),
-          selectedPage: Number(params.selectedPage),
-          sort: sort || sortList[0],
-        };
-        dispatch(setFilters(filterParams));
-
+        activeCategory: Number(params.activeCategory),
+        selectedPage: Number(params.selectedPage),
+        sort: sort || sortList[0],
+      };
+      dispatch(setFilters(filterParams));
 
       isSearch.current = true;
     }
-    
   }, []);
 
   //If first render has already been, the app will execute the request to a server

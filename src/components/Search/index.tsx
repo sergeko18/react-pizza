@@ -3,8 +3,8 @@ import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
 import removeIcon from '../../assets/img/remove-icon.svg';
 //import { SearchContext } from '../../App';
-import { setSearchValue } from '../../redux/slices/filterSlice';
 import { useDispatch } from 'react-redux';
+import { setSearchValue } from '../../redux/filter/slice';
 
 const Serach: React.FC = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const Serach: React.FC = () => {
     setInputValue('');
     dispatch(setSearchValue(''));
     //   document.querySelector('input').focus()
-    
+
     // if (inputRef.current) {
     //   inputRef.current.focus();
     // }

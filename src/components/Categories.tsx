@@ -1,16 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setActiveCategory } from '../redux/slices/filterSlice';
+import { setActiveCategory } from '../redux/filter/slice';
 
 type CategoriesProps = {
   activeCategory: number;
-  
-}
+};
 
-const Categories: React.FC<CategoriesProps> = (props) => {
-
+const Categories: React.FC<CategoriesProps> = React.memo((props) => {
   const dispatch = useDispatch();
-
 
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
@@ -30,6 +27,6 @@ const Categories: React.FC<CategoriesProps> = (props) => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;

@@ -213,7 +213,29 @@ body {
             display: none;
           }
         }
+
+        &:disabled {
+          opacity: 0.4;
+          border-color: #acacac;
+  
+          &:active {
+            transform: none;
+          }
+          
+          &:hover {
+            background-color: transparent;
+            svg path {
+              fill: #acacac 
+            }
+          }
+  
+          svg path {
+            fill: #acacac 
+          }
+        }
       }
+
+      
 
       b {
         font-size: 22px;
