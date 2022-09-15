@@ -10,6 +10,7 @@ import { useAppDispatch } from '../redux/store';
 import { selectPizza } from '../redux/pizza/selectors';
 import { selectFilter } from '../redux/filter/selectors';
 import { setFilters, setSelectedPage } from '../redux/filter/slice';
+import { fetchPizzas } from '../redux/pizza/asyncActions'
 
 const Home: React.FC = () => {
   const { itemsPizza, status } = useSelector(selectPizza);
