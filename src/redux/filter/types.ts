@@ -1,11 +1,11 @@
 export type SortType = {
   name:
-    | 'популярности(у)'
-    | 'популярности(в)'
-    | 'цене(у)'
-    | 'цене(в)'
-    | 'алфавиту(у)'
-    | 'алфавиту(в)';
+    | 'popularity(a–z)'
+    | 'popularity(z–a)'
+    | 'price(a–z)'
+    | 'price(z–a)'
+    | 'alphabet(a–z)'
+    | 'alphabet(z–a)';
   sortApiName: 'rating' | 'price' | 'name' | '-rating' | '-price' | '-name';
 };
 

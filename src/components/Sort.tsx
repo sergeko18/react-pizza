@@ -4,12 +4,12 @@ import { setSort } from '../redux/filter/slice';
 import { SortType } from '../redux/filter/types';
 
 export const sortList: SortType[] = [
-  { name: 'популярности(у)', sortApiName: 'rating' },
-  { name: 'популярности(в)', sortApiName: '-rating' },
-  { name: 'цене(у)', sortApiName: 'price' },
-  { name: 'цене(в)', sortApiName: '-price' },
-  { name: 'алфавиту(у)', sortApiName: 'name' },
-  { name: 'алфавиту(в)', sortApiName: '-name' },
+  { name: 'popularity(a–z)', sortApiName: 'rating' },
+  { name: 'popularity(z–a)', sortApiName: '-rating' },
+  { name: 'price(a–z)', sortApiName: 'price' },
+  { name: 'price(z–a)', sortApiName: '-price' },
+  { name: 'alphabet(a–z)', sortApiName: 'name' },
+  { name: 'alphabet(z–a)', sortApiName: '-name' },
 ];
 
 type SortProps = {
@@ -59,7 +59,7 @@ const Sort: React.FC<SortProps> = React.memo((props) => {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
+        <b>Sort by:</b>
         <span>{props.sort.name}</span>
       </div>
       {open && (

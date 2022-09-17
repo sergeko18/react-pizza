@@ -4,7 +4,7 @@ import { FilterSliceState, SetFiltersInterface, SortType } from './types';
 const initialState: FilterSliceState = {
   activeCategory: 0,
   selectedPage: 1,
-  sort: { name: 'популярности(у)', sortApiName: 'rating' },
+  sort: { name: 'popularity(a–z)', sortApiName: 'rating' },
   searchValue: '',
 };
 

@@ -2,15 +2,16 @@ import React from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { Categories, Sort, PizzaBlock, Skeleton, Pagination, sortList } from '../components';
-//import { SearchContext } from '../App';
 import { useSelector } from 'react-redux';
-//import { useDispatch } from 'react-redux';
 import NotFound404 from './NotFound';
 import { useAppDispatch } from '../redux/store';
 import { selectPizza } from '../redux/pizza/selectors';
 import { selectFilter } from '../redux/filter/selectors';
 import { setFilters, setSelectedPage } from '../redux/filter/slice';
 import { fetchPizzas } from '../redux/pizza/asyncActions'
+//import { SearchContext } from '../App';
+//import { useDispatch } from 'react-redux';
+
 
 const Home: React.FC = () => {
   const { itemsPizza, status } = useSelector(selectPizza);
@@ -115,7 +116,7 @@ const Home: React.FC = () => {
         <Categories activeCategory={activeCategory} />
         <Sort sort={sort} /*setSelectedSort={(i) => setSelectedSort(i)}*/ />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
+      <h2 className="content__title">All pizza</h2>
       {status === 'error' ? (
         <NotFound404 />
       ) : (
