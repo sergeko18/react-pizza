@@ -6,7 +6,7 @@ import React from 'react';
 import { selectCart } from '../redux/cart/selectors';
 
 const Header = () => {
-  const { totalPrice, items } = useSelector(selectCart);
+  const { totalPrice, items, pizzaCounter} = useSelector(selectCart);
   const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
   const { pathname } = useLocation(); //window.location.pathname;
   const isMounted = React.useRef(false);
@@ -15,6 +15,9 @@ const Header = () => {
     if (isMounted.current) {
       const json = JSON.stringify(items);
       localStorage.setItem('cart', json);
+      
+      const jsonPizzaCounter = JSON.stringify(pizzaCounter)
+      localStorage.setItem('pizzaCounter', jsonPizzaCounter)
     }
     isMounted.current = true;
   }, [items]);

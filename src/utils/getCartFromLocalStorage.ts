@@ -10,3 +10,9 @@ export const getCartFromLocalStorAge = () => {
     totalPrice,
   };
 };
+
+export const getPizzaCountFromLocalStorage = () => {
+  const data = localStorage.getItem('pizzaCounter');
+  const pizzaCountFromLS = data ? JSON.parse(data) : [];
+  return pizzaCountFromLS;
+}

@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { calcTotalPrice } from '../../utils/calcTotalPrice';
-import { getCartFromLocalStorAge } from '../../utils/getCartFromLocalStorage';
+import { getCartFromLocalStorAge, getPizzaCountFromLocalStorage } from '../../utils/getCartFromLocalStorage';
 import { CaratSliceState, CartItemType } from './types';
 
 const cartDataFromLS = getCartFromLocalStorAge();
+const pizzaCounter = getPizzaCountFromLocalStorage();
 
 const initialState: CaratSliceState = {
   items: cartDataFromLS.items,
   totalPrice: cartDataFromLS.totalPrice,
-  pizzaCounter: [],
+  pizzaCounter,
 };
 
 export const cartSlice = createSlice({
@@ -61,7 +62,7 @@ export const cartSlice = createSlice({
       if (findItem) {
         if (findItem.count) {
           findItem.count--;
-          state.totalPrice -= findItem.price;
+          state.totalPrice = calcTotalPrice(state.items);
         }
       }
       const findItemById = state.pizzaCounter.find((obj) => obj.id === action.payload.id);
@@ -79,7 +80,7 @@ export const cartSlice = createSlice({
       );
       if (findItem) {
         state.items = state.items.filter((obj) => obj !== findItem);
-        state.totalPrice -= findItem.price * findItem.count;
+        state.totalPrice = calcTotalPrice(state.items);
       };
       const findItemById = state.pizzaCounter.find((obj) => obj.id === action.payload.id);
       if (findItem && findItemById){
@@ -91,6 +92,7 @@ export const cartSlice = createSlice({
     clearItems(state) {
       state.items = [];
       state.totalPrice = 0;
+      state.pizzaCounter = []
     },
   },
 });
