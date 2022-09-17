@@ -8,6 +8,7 @@ const cartDataFromLS = getCartFromLocalStorAge();
 const initialState: CaratSliceState = {
   items: cartDataFromLS.items,
   totalPrice: cartDataFromLS.totalPrice,
+  pizzaCounter: [],
 };
 
 export const cartSlice = createSlice({
@@ -21,7 +22,12 @@ export const cartSlice = createSlice({
     // }, 0);
     // },
     addItem(state, action: PayloadAction<CartItemType>) {
-      const findItem = state.items.find((obj) => obj.id === action.payload.id);
+      const findItem = state.items.find(
+        (obj) =>
+          obj.id === action.payload.id &&
+          obj.size === action.payload.size &&
+          obj.type === action.payload.type,
+      );
       if (findItem) {
         findItem.count++;
       } else {
@@ -31,25 +37,55 @@ export const cartSlice = createSlice({
         });
       }
 
+      const findItemById = state.pizzaCounter.find((obj) => obj.id === action.payload.id);
+      if (findItemById) {
+        findItemById.pizzaCount++;
+      } else {
+        state.pizzaCounter.push({
+          ...action.payload,
+          pizzaCount: 1,
+        });
+      }
+
       state.totalPrice = calcTotalPrice(state.items);
     },
 
-    decrementItem(state, action: PayloadAction<string>) {
-      const findItem = state.items.find((obj) => obj.id === action.payload);
+    decrementItem(state, action: PayloadAction<CartItemType>) {
+      const findItem = state.items.find(
+        (obj) =>
+          obj.id === action.payload.id &&
+          obj.size === action.payload.size &&
+          obj.type === action.payload.type,
+      );
+      //const findItemById = state.pizzaCounter.find((obj) => obj.id === action.payload.id);
       if (findItem) {
         if (findItem.count) {
           findItem.count--;
           state.totalPrice -= findItem.price;
         }
       }
+      const findItemById = state.pizzaCounter.find((obj) => obj.id === action.payload.id);
+      if (findItem && findItemById){
+        findItemById.pizzaCount--;
+      }
     },
 
-    removeItem(state, action: PayloadAction<string>) {
-      const findItem = state.items.find((obj) => obj.id === action.payload);
+    removeItem(state, action: PayloadAction<CartItemType>) {
+      const findItem = state.items.find(
+        (obj) =>
+          obj.id === action.payload.id &&
+          obj.size === action.payload.size &&
+          obj.type === action.payload.type,
+      );
       if (findItem) {
-        state.items = state.items.filter((obj) => obj.id !== action.payload);
+        state.items = state.items.filter((obj) => obj !== findItem);
         state.totalPrice -= findItem.price * findItem.count;
+      };
+      const findItemById = state.pizzaCounter.find((obj) => obj.id === action.payload.id);
+      if (findItem && findItemById){
+        findItemById.pizzaCount = findItemById.pizzaCount - findItem.count;
       }
+
     },
 
     clearItems(state) {

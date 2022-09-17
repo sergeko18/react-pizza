@@ -14,12 +14,16 @@ type CartItemProps = {
 };
 
 const CartItem: React.FC<CartItemProps> = (props) => {
+  console.log(props);
   const dispatch = useDispatch();
-  const onClickDecrement = () => dispatch(decrementItem(props.id));
-  const onClickIncrement = () => dispatch(addItem({ id: props.id } as CartItemType));
+  const itemForDispatch = { id: props.id, size: props.size, type: props.type }
+  const onClickDecrement = () =>
+    dispatch(decrementItem(itemForDispatch as CartItemType));
+
+  const onClickIncrement = () => dispatch(addItem(itemForDispatch as CartItemType));
   const onClickRemove = () => {
     if (window.confirm('Remove pizza?')) {
-      dispatch(removeItem(props.id));
+      dispatch(removeItem(itemForDispatch as CartItemType));
     }
   };
   return (

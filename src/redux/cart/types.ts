@@ -6,9 +6,12 @@ export type CartItemType = {
   size: number;
   count: number;
   price: number;
+  pizzaCount: number;
 };
+
 
 export interface CaratSliceState {
   totalPrice: number;
   items: CartItemType[];
+  pizzaCounter: CartItemType[];
 }
