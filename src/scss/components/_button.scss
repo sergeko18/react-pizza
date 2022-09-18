@@ -134,6 +134,10 @@
     align-items: center;
     line-height: 23px;
     padding: 12px 25px;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.03);
+    }
 
     svg {
       margin-right: 8px;

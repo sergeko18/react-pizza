@@ -2,6 +2,11 @@
     position: relative;
     width: 350px;
     padding: 0 15px 0 15px;
+
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.03);
+    }
     
 
     @media (max-width: 645px) {

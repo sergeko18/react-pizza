@@ -5,10 +5,15 @@
   display: block;
   margin: 0 auto;
   margin-bottom: 65px;
+  transition: all 0.2s ease-in-out;
 
   &-wrapper {
     display: flex;
     justify-content: center;
+  }
+
+  &:hover {
+    transform: scale(1.03);
   }
 
 

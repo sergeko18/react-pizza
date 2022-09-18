@@ -108,10 +108,19 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    
     @media (max-width: 800px) {
      width: auto; 
     }
     
+  }
+
+  &__item {
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      transform: scale(1.03);
+    }
   }
 
   .content__title {
