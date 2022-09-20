@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-pizza/static/css/main.fa43bd2b.css",
-    "main.js": "/react-pizza/static/js/main.f964949f.js",
+    "main.css": "/react-pizza/static/css/main.0a468a6d.css",
+    "main.js": "/react-pizza/static/js/main.e43c6264.js",
     "CartChunk.js": "/react-pizza/static/js/CartChunk.aaf7e8bb.chunk.js",
     "FullPizzaChunk.css": "/react-pizza/static/css/FullPizzaChunk.a90fcb24.chunk.css",
     "FullPizzaChunk.js": "/react-pizza/static/js/FullPizzaChunk.0dabe796.chunk.js",
@@ -10,14 +10,14 @@
     "static/media/pizza-logo.svg": "/react-pizza/static/media/pizza-logo.56ac87032d8f6fdf863326acd06c0d97.svg",
     "index.html": "/react-pizza/index.html",
     "static/media/remove-icon.svg": "/react-pizza/static/media/remove-icon.82b189471948ae60947cd14aacfe3903.svg",
-    "main.fa43bd2b.css.map": "/react-pizza/static/css/main.fa43bd2b.css.map",
-    "main.f964949f.js.map": "/react-pizza/static/js/main.f964949f.js.map",
+    "main.0a468a6d.css.map": "/react-pizza/static/css/main.0a468a6d.css.map",
+    "main.e43c6264.js.map": "/react-pizza/static/js/main.e43c6264.js.map",
     "CartChunk.aaf7e8bb.chunk.js.map": "/react-pizza/static/js/CartChunk.aaf7e8bb.chunk.js.map",
     "FullPizzaChunk.a90fcb24.chunk.css.map": "/react-pizza/static/css/FullPizzaChunk.a90fcb24.chunk.css.map",
     "FullPizzaChunk.0dabe796.chunk.js.map": "/react-pizza/static/js/FullPizzaChunk.0dabe796.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fa43bd2b.css",
-    "static/js/main.f964949f.js"
+    "static/css/main.0a468a6d.css",
+    "static/js/main.e43c6264.js"
   ]
 }
