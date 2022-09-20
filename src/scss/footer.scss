@@ -1,0 +1,64 @@
+.footer-wrapper {
+  background-color: black;
+  height: 270px;
+  padding: 40px;
+  color: #ffffff;
+
+  &__button {
+    width: 100px;
+    height: 100px;
+    background-color: rgb(104, 104, 104);
+    border-radius: 50%;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    &:hover {
+      background-color: rgb(53, 53, 53);
+    }
+    &_like {
+      width: 50px;
+      padding: 14px 0 0 0;
+    }
+    &_count {
+      font-weight: 500;
+      color: white;
+    }
+  }
+
+  &__logo {
+    color: #ffffff;
+    font-size: 24px;
+    letter-spacing: 1%;
+    text-transform: uppercase;
+    font-weight: 800;
+    width: 156px;
+    margin: auto;
+    padding: 15px 0 0;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    
+    &_item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        width: 70px;
+        img{
+            margin-right: 3px;
+        }
+    }
+
+    
+    img {
+      height: 30px;
+    }
+  }
+
+  &__published{
+    font-size: 11px;
+    text-align: center;
+  }
+}
