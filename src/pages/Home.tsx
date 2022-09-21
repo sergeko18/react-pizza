@@ -1,21 +1,28 @@
-import React from 'react';
-import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
-import { Categories, Sort, PizzaBlock, Skeleton, Pagination, sortList } from '../components';
-import { useSelector } from 'react-redux';
-import NotFound404 from './NotFound';
-import { useAppDispatch } from '../redux/store';
-import { selectPizza } from '../redux/pizza/selectors';
-import { selectFilter } from '../redux/filter/selectors';
-import { setFilters, setSelectedPage } from '../redux/filter/slice';
-import { fetchPizzas } from '../redux/pizza/asyncActions'
+import React from "react";
+import qs from "qs";
+import { useNavigate } from "react-router-dom";
+import {
+  Categories,
+  Sort,
+  PizzaBlock,
+  Skeleton,
+  Pagination,
+  sortList,
+} from "../components";
+import { useSelector } from "react-redux";
+import NotFound404 from "./NotFound";
+import { useAppDispatch } from "../redux/store";
+import { selectPizza } from "../redux/pizza/selectors";
+import { selectFilter } from "../redux/filter/selectors";
+import { setFilters, setSelectedPage } from "../redux/filter/slice";
+import { fetchPizzas } from "../redux/pizza/asyncActions";
 //import { SearchContext } from '../App';
 //import { useDispatch } from 'react-redux';
 
-
 const Home: React.FC = () => {
   const { itemsPizza, status } = useSelector(selectPizza);
-  const { activeCategory, sort, selectedPage, searchValue } = useSelector(selectFilter);
+  const { activeCategory, sort, selectedPage, searchValue } =
+    useSelector(selectFilter);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   let isSearch = React.useRef<boolean>(false);
@@ -33,10 +40,10 @@ const Home: React.FC = () => {
   };
 
   const getPizzas = () => {
-    const sortBy = sort.sortApiName.replace('-', '');
-    const order = sort.sortApiName.includes('-') ? 'asc' : 'desc';
-    const category = activeCategory > 0 ? `category=${activeCategory}` : '';
-    const search = searchValue ? `&search=${searchValue}` : '';
+    const sortBy = sort.sortApiName.replace("-", "");
+    const order = sort.sortApiName.includes("-") ? "asc" : "desc";
+    const category = activeCategory > 0 ? `category=${activeCategory}` : "";
+    const search = searchValue ? `&search=${searchValue}` : "";
 
     // fetch(`https://62def0c1976ae7460be54171.mockapi.io/items?${category}&page=${selectedPage}&limit=4&sortby=${sortBy}&order=${order}${search}`)
     //   .then((res) => res.json())
@@ -62,7 +69,7 @@ const Home: React.FC = () => {
 
     dispatch(
       // @ts-ignore
-      fetchPizzas({ sortBy, order, category, search, selectedPage }),
+      fetchPizzas({ sortBy, order, category, search, selectedPage })
     );
     window.scrollTo(0, 0);
   };
@@ -74,7 +81,9 @@ const Home: React.FC = () => {
       //console.log(window.location.search);  =>  ?sortApiName=rating&activeCategory=1&selectedPage=1
 
       const params = qs.parse(window.location.search.substring(1)); //Making the string to a object with "qs". Method substring() removes the first symbol from the string "?"
-      const sort = sortList.find((obj) => obj.sortApiName === params.sortApiName); //find() method to find same key-value pair
+      const sort = sortList.find(
+        (obj) => obj.sortApiName === params.sortApiName
+      ); //find() method to find same key-value pair
       const filterParams = {
         activeCategory: Number(params.activeCategory),
         selectedPage: Number(params.selectedPage),
@@ -117,11 +126,11 @@ const Home: React.FC = () => {
         <Sort sort={sort} /*setSelectedSort={(i) => setSelectedSort(i)}*/ />
       </div>
       <h2 className="content__title">All pizza</h2>
-      {status === 'error' ? (
+      {status === "error" ? (
         <NotFound404 />
       ) : (
         <div className="content__items">
-          {status === 'loading'
+          {status === "loading"
             ? [...new Array(10)].map((_, index) => <Skeleton key={index} />)
             : itemsPizza.map((obj: any) => (
                 <PizzaBlock
@@ -132,7 +141,10 @@ const Home: React.FC = () => {
         </div>
       )}
 
-      <Pagination selectedPage={selectedPage} setSelectedPageOnClick={setSelectedPageOnClick} />
+      <Pagination
+        selectedPage={selectedPage}
+        setSelectedPageOnClick={setSelectedPageOnClick}
+      />
     </div>
   );
 };

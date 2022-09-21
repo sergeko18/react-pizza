@@ -1,14 +1,20 @@
-import React, { Suspense } from 'react';
-import './scss/app.scss';
-import Home from './pages/Home';
-import { Routes, Route } from 'react-router-dom';
-import MainLayout from './layouts/MainLayout';
+import React, { Suspense } from "react";
+import "./scss/app.scss";
+import Home from "./pages/Home";
+import { Routes, Route } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
 //import Cart from './pages/Cart';
 //import FullPizza from './pages/FullPizza';
 //import NotFound404 from './pages/NotFound';
-const Cart = React.lazy(() => import(/* webpackChunkName: "CartChunk" */'./pages/Cart'));
-const FullPizza = React.lazy(() => import(/* webpackChunkName: "FullPizzaChunk" */'./pages/FullPizza'));
-const NotFound404 = React.lazy(() => import(/* webpackChunkName: "NotFound404Chunk" */'./pages/NotFound'));
+const Cart = React.lazy(
+  () => import(/* webpackChunkName: "CartChunk" */ "./pages/Cart")
+);
+const FullPizza = React.lazy(
+  () => import(/* webpackChunkName: "FullPizzaChunk" */ "./pages/FullPizza")
+);
+const NotFound404 = React.lazy(
+  () => import(/* webpackChunkName: "NotFound404Chunk" */ "./pages/NotFound")
+);
 
 //export const SearchContext = React.createContext('');/* webpackChunkName: "CartChunk" */
 
@@ -22,7 +28,7 @@ function App() {
         <Route
           path="cart"
           element={
-            <Suspense fallback={<div className='container '>Loading...</div>}>
+            <Suspense fallback={<div className="container ">Loading...</div>}>
               <Cart />
             </Suspense>
           }
@@ -30,7 +36,7 @@ function App() {
         <Route
           path="pizza/:id"
           element={
-            <Suspense fallback={<div className='container '>Loading...</div>}>
+            <Suspense fallback={<div className="container ">Loading...</div>}>
               <FullPizza />
             </Suspense>
           }
@@ -38,7 +44,7 @@ function App() {
         <Route
           path="*"
           element={
-            <Suspense fallback={<div className='container '>Loading...</div>}>
+            <Suspense fallback={<div className="container ">Loading...</div>}>
               <NotFound404 />
             </Suspense>
           }

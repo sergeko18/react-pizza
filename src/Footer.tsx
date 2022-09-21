@@ -1,7 +1,7 @@
-import React from 'react';
-import './scss/footer.scss';
-import like from './assets/img/like.png';
-import views from './assets/img/view.png';
+import React from "react";
+import "./scss/footer.scss";
+import like from "./assets/img/like.png";
+import views from "./assets/img/view.png";
 
 const Footer = () => {
   return (
@@ -26,7 +26,9 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="footer-wrapper__published">Published: September 19th 2022</div>
+      <div className="footer-wrapper__published">
+        Published: September 19th 2022
+      </div>
     </div>
   );
 };
