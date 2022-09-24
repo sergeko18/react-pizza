@@ -1,16 +1,16 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { selectPizzaCounterItemById } from '../../redux/cart/selectors';
-import { addItem } from '../../redux/cart/slice';
-import { CartItemType } from '../../redux/cart/types';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { selectPizzaCounterItemById } from "../../redux/cart/selectors";
+import { addItem } from "../../redux/cart/slice";
+import { CartItemType } from "../../redux/cart/types";
 
-const typeNames = ['thin-crust', 'traditional'];
+const typeNames = ["thin-crust", "traditional"];
 
 type PizzaBlockProps = {
   id: string;
   name: string;
-  price: number;
+  price: number[];
   imageUrl: string;
   sizes: number[];
   types: number[];
@@ -22,21 +22,20 @@ const PizzaBlock: React.FC<PizzaBlockProps> = (props) => {
   const dispatch = useDispatch();
   //const cartItem = useSelector(selectCartItemsById(props.id));
   const pizzaCounterItem = useSelector(selectPizzaCounterItemById(props.id));
-
   const addedCount = pizzaCounterItem ? pizzaCounterItem.pizzaCount : 0;
 
   const onClickAdd = () => {
     const item: CartItemType = {
       id: props.id,
       name: props.name,
-      price: props.price,
+      price: props.price[activeSize],
       imageUrl: props.imageUrl,
       type: typeNames[activeType],
       size: props.sizes[activeSize],
       count: 0,
-      pizzaCount: 0
+      pizzaCount: 0,
     };
-    
+
     dispatch(addItem(item));
   };
 
@@ -44,7 +43,11 @@ const PizzaBlock: React.FC<PizzaBlockProps> = (props) => {
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
         <Link to={`/pizza/${props.id}`}>
-          <img className="pizza-block__image" src={props.imageUrl} alt="Pizza" />
+          <img
+            className="pizza-block__image"
+            src={props.imageUrl}
+            alt="Pizza"
+          />
         </Link>
 
         <h4 className="pizza-block__title">{props.name}</h4>
@@ -54,8 +57,9 @@ const PizzaBlock: React.FC<PizzaBlockProps> = (props) => {
               <li
                 key={i + props.id}
                 onClick={() => setActiveType(type)}
-                className={activeType === i ? 'active' : ''}>
-                {' '}
+                className={activeType === i ? "active" : ""}
+              >
+                {" "}
                 {typeNames[type]}
               </li>
             ))}
@@ -65,21 +69,26 @@ const PizzaBlock: React.FC<PizzaBlockProps> = (props) => {
               <li
                 key={i + (props.id + 3)}
                 onClick={() => setActiveSize(i)}
-                className={activeSize === i ? 'active' : ''}>
-                {size} cm 
+                className={activeSize === i ? "active" : ""}
+              >
+                {size} cm
               </li>
             ))}
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">{props.price} $</div>
-          <button onClick={onClickAdd} className="button button--outline button--add">
+          <div className="pizza-block__price">{props.price[activeSize]} $</div>
+          <button
+            onClick={onClickAdd}
+            className="button button--outline button--add"
+          >
             <svg
               width="12"
               height="12"
               viewBox="0 0 12 12"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg">
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M10.8 4.8H7.2V1.2C7.2 0.5373 6.6627 0 6 0C5.3373 0 4.8 0.5373 4.8 1.2V4.8H1.2C0.5373 4.8 0 5.3373 0 6C0 6.6627 0.5373 7.2 1.2 7.2H4.8V10.8C4.8 11.4627 5.3373 12 6 12C6.6627 12 7.2 11.4627 7.2 10.8V7.2H10.8C11.4627 7.2 12 6.6627 12 6C12 5.3373 11.4627 4.8 10.8 4.8Z"
                 fill="white"

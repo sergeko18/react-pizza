@@ -16,6 +16,7 @@ import { selectPizza } from "../redux/pizza/selectors";
 import { selectFilter } from "../redux/filter/selectors";
 import { setFilters, setSelectedPage } from "../redux/filter/slice";
 import { fetchPizzas } from "../redux/pizza/asyncActions";
+import { ItemsPizzaTypes } from "../redux/pizza/types";
 //import { SearchContext } from '../App';
 //import { useDispatch } from 'react-redux';
 
@@ -132,7 +133,7 @@ const Home: React.FC = () => {
         <div className="content__items">
           {status === "loading"
             ? [...new Array(10)].map((_, index) => <Skeleton key={index} />)
-            : itemsPizza.map((obj: any) => (
+            : itemsPizza.map((obj: ItemsPizzaTypes) => (
                 <PizzaBlock
                   key={obj.id}
                   {...obj} /* price={obj.price} name={obj.name} imageUrl={obj.imageUrl} sizes={obj.sizes} types={obj.types} */
