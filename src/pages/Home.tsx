@@ -42,6 +42,7 @@ const Home: React.FC = () => {
 
   const getPizzas = () => {
     const sortBy = sort.sortApiName.replace("-", "");
+    debugger;
     const order = sort.sortApiName.includes("-") ? "asc" : "desc";
     const category = activeCategory > 0 ? `category=${activeCategory}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
